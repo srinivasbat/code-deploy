@@ -1,31 +1,40 @@
 pipeline {
-  agent {
-    label 'jenkins-slave' // Specify the Jenkins agent where the pipeline will run
-  }
+    agent {
+        label 'jenkins-slave' // Specify the Jenkins agent where the pipeline will run
+    }
   
-  stages {
-    stage('Deploy') {
-      steps {
-        sh 'cp /root/workspace/pipeline-test/codedeploy-master/index.html /var/www/html/'
-      }
-    }
+    stages {
+        stage('Deploy') {
+            steps {
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/index.html /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/bad.jpg /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/badminton.jpg /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/circket.jpg /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/css.jpg /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/map.jpg /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/snooker.jpg /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/tennis.jpg /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/ton.jpg /var/www/html/'
+                sh 'cp /root/workspace/pipeline-test/codedeploy-master/touch.jpg /var/www/html/'
+            }
+        }
     
-    stage('BeforeInstall') {
-      steps {
-        sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/install_dependencies'
-        sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/start_server'
-        sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
-        
-        sh '/root/workspace/pipeline-test/codedeploy-master/scripts/install_dependencies'
-        sh '/root/workspace/pipeline-test/codedeploy-master/scripts/start_server'
-      }
-    }
+        stage('BeforeInstall') {
+            steps {
+                sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/install_dependencies'
+                sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/start_server'
+                sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
+                
+                sh '/root/workspace/pipeline-test/codedeploy-master/scripts/install_dependencies'
+                sh '/root/workspace/pipeline-test/codedeploy-master/scripts/start_server'
+            }
+        }
     
-    stage('ApplicationStop') {
-      steps {
-        sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
-        sh '/root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
-      }
+        stage('ApplicationStop') {
+            steps {
+                sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
+                sh '/root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
+            }
+        }
     }
-  }
 }
