@@ -1,39 +1,41 @@
 pipeline {
     agent {
-        label 'jenkins-slave' // Specify the Jenkins agent where the pipeline will run
+        label 'jenkins-slave'
     }
-  
+
     stages {
-        stage('Deploy') {
+        stage('Clone Repository') {
             steps {
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/index.html /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/bad.jpg /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/badminton.jpg /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/circket.jpg /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/css.jpg /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/map.jpg /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/snooker.jpg /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/tennis.jpg /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/ton.jpg /var/www/html/'
-                sh 'cp /root/workspace/pipeline-test/codedeploy-master/touch.jpg /var/www/html/'
+                git 'https://github.com/srinivasbat/code-deploy.git'
             }
         }
-    
-        stage('BeforeInstall') {
+
+        stage('Install Dependencies') {
             steps {
-                sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/install_dependencies'
-                sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/start_server'
-                sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
-                
-                sh '/root/workspace/pipeline-test/codedeploy-master/scripts/install_dependencies'
-                sh '/root/workspace/pipeline-test/codedeploy-master/scripts/start_server'
+                sh 'cd code-deploy'
+                sh 'npm install'
             }
         }
-    
-        stage('ApplicationStop') {
+
+        stage('Build and Deploy') {
             steps {
-                sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
-                sh '/root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
+                sh 'cp code-deploy/index.html /var/www/html/'
+                sh 'cp code-deploy/bad.jpg /var/www/html/'
+                sh 'cp code-deploy/badminton.jpg /var/www/html/'
+                sh 'cp code-deploy/circket.jpg /var/www/html/'
+                sh 'cp code-deploy/css.jpg /var/www/html/'
+                sh 'cp code-deploy/map.jpg /var/www/html/'
+                sh 'cp code-deploy/snooker.jpg /var/www/html/'
+                sh 'cp code-deploy/tennis.jpg /var/www/html/'
+                sh 'cp code-deploy/ton.jpg /var/www/html/'
+                sh 'cp code-deploy/touch.jpg /var/www/html/'
+            }
+        }
+
+        stage('After Deployment') {
+            steps {
+                sh 'chmod +x code-deploy/scripts/start_server'
+                sh 'code-deploy/scripts/start_server'
             }
         }
     }
