@@ -4,16 +4,20 @@ pipeline {
   }
   
   stages {
-    stage('Deploy') {
+    stage('BeforeInstall') {
       steps {
-        sh 'cp $WORKSPACE/index.html /var/www/html/'
+        sh 'chmod +x scripts/install_dependencies'
+        sh 'chmod +x scripts/start_server'
+        sh 'chmod +x scripts/stop_server'
+        
+        sh 'scripts/install_dependencies'
+        sh 'scripts/start_server'
       }
     }
     
-    stage('BeforeInstall') {
+    stage('Deploy') {
       steps {
-        sh 'scripts/install_dependencies'
-        sh 'scripts/start_server'
+        sh 'cp $WORKSPACE/index.html /var/www/html/'
       }
     }
     
