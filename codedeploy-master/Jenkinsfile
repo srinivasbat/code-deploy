@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('Deploy') {
       steps {
-        sh 'cp /index.html /var/www/html/'
+        sh 'cp $WORKSPACE/index.html /var/www/html/'
       }
     }
     
