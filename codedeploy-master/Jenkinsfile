@@ -14,6 +14,7 @@ pipeline {
       steps {
         sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/install_dependencies'
         sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/start_server'
+        sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
         
         sh '/root/workspace/pipeline-test/codedeploy-master/scripts/install_dependencies'
         sh '/root/workspace/pipeline-test/codedeploy-master/scripts/start_server'
@@ -22,6 +23,7 @@ pipeline {
     
     stage('ApplicationStop') {
       steps {
+        sh 'chmod +x /root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
         sh '/root/workspace/pipeline-test/codedeploy-master/scripts/stop_server'
       }
     }
