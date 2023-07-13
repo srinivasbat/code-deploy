@@ -8,6 +8,7 @@ pipeline {
       steps {
         sh 'cp /root/workspace/pipeline-test/codedeploy-master/index.html /var/www/html/'
         sh 'cp /root/workspace/pipeline-test/codedeploy-master/*.jpg /var/www/html/'
+        sh 'cp /root/workspace/pipeline-test/codedeploy-master/
       }
     }
     
